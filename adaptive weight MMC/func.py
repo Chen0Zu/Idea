@@ -8,17 +8,37 @@ Created on Wed Jan 16 21:46:30 2019
 
 import numpy as np
 
-def mmc(X,gnd):
+def pca(X,d):
+    St = np.cov(X.T， bias = True)
+    eig_value, eig_vec = np.linalg.eig(St)
+    idx = np.argsort(-eig_value)
+    
+    return eig_value[idx[0:d+1]], eig_vec[:,idx[0:d+1]]
+
+def lda(X,gnd,d):
     St = np.cov(X.T, bias = True)
     N,D = X.shape
     Sw = np.zeros([D,D])
     for i in np.unique(gnd):
-        Sw = Sw + sum(gnd==i)/N*np.cov(X[gnd.reshape(-1) == i,:].T, bias = True)
+        Sw = Sw + \
+        sum(gnd.flatten()==i)/N*np.cov(X[gnd.reshape(-1) == i,:].T, bias = True)
+    Sb = St - Sw
+    
+    eig_value, eig_vec = np.linalg.eig(np.linalg.inv(Sw)@Sb)
+    idx = np.argsort(-eig_value)
+    return eig_value[idx[0:d+1]], eig_vec[:,idx[0:d+1]]
+
+def mmc(X,gnd,d):
+    St = np.cov(X.T, bias = True)
+    N,D = X.shape
+    Sw = np.zeros([D,D])
+    for i in np.unique(gnd):
+        Sw = Sw + sum(gnd.flatten()==i)/N*np.cov(X[gnd.reshape(-1) == i,:].T, bias = True)
     Sb = St - Sw
     
     eig_value, eig_vec = np.linalg.eig(Sb-Sw)
     idx = np.argsort(-eig_value)
-    return eig_value[idx], eig_vec[:,idx]
+    return eig_value[idx[0:d+1]], eig_vec[:,idx[0:d+1]]
 
 def weightmmc(X,gnd,d,alpha = 1):
     Iter = 10
