@@ -9,7 +9,7 @@ Created on Wed Jan 16 21:46:30 2019
 import numpy as np
 
 def pca(X,d):
-    St = np.cov(X.T， bias = True)
+    St = np.cov(X.T, bias = True)
     eig_value, eig_vec = np.linalg.eig(St)
     idx = np.argsort(-eig_value)
     
