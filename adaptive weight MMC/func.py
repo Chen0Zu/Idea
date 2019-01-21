@@ -9,11 +9,8 @@ Created on Wed Jan 16 21:46:30 2019
 import numpy as np
 
 def pca(X,d):
-    St = np.cov(X.T, bias = True)
-    eig_value, eig_vec = np.linalg.eig(St)
-    idx = np.argsort(-eig_value)
-    
-    return eig_value[idx[0:d+1]], eig_vec[:,idx[0:d+1]]
+    U, sigma, VT = np.linalg.svd(X)
+    return sigma[0:d], VT.T[:,0:d]
 
 def lda(X,gnd,d):
     St = np.cov(X.T, bias = True)
@@ -24,9 +21,8 @@ def lda(X,gnd,d):
         sum(gnd.flatten()==i)/N*np.cov(X[gnd.reshape(-1) == i,:].T, bias = True)
     Sb = St - Sw
     
-    eig_value, eig_vec = np.linalg.eig(np.linalg.inv(Sw)@Sb)
-    idx = np.argsort(-eig_value)
-    return eig_value[idx[0:d+1]], eig_vec[:,idx[0:d+1]]
+    U, sigma, VT = np.linalg.svd(np.linalg.inv(Sw)@Sb)
+    return sigma[0:d], VT.T[:,0:d]
 
 def mmc(X,gnd,d):
     St = np.cov(X.T, bias = True)
@@ -55,10 +51,9 @@ def weightmmc(X,gnd,d,alpha = 1):
     obj = np.zeros([Iter, 2])
     for i in range(Iter):
         # update projection vector
-        eig_value, eig_vec = np.linalg.eig(alpha*Sb-alpha**2*Sw)
-        idx = np.argsort(-eig_value)
-        eig_value = eig_value[idx[0:d+1]]
-        eig_vec = eig_vec[:,idx[0:d+1]]
+        U, sigma, VT = np.linalg.svd(alpha*Sb-alpha**2*Sw)
+        eig_value = sigma[0:d]
+        eig_vec = VT.T[:,0:d]
         
         # update alpha
         alpha = np.trace(eig_vec.T@Sb@eig_vec)/(2*np.trace(eig_vec.T@Sw@eig_vec))
