@@ -22,6 +22,3 @@ X2 = np.random.multivariate_normal(mu2, cov, int(N/2))
 X = np.r_[X1, X2]
 gnd = np.r_[np.ones([int(N/2),1]), -np.ones([int(N/2),1])]
 
-a,b = mmc(X,gnd,1)
-obj = weightmmc(X,gnd,2,40)
-obj2 = weightmmc(X,gnd,3,40)
