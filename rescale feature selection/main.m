@@ -1,11 +1,12 @@
 
 clc;clear;
 %% load data
-dataname = 'glass';
+datanames = {'glass','segment_uni', 'LM', 'USPSdata_20_uni', 'binalpha_uni', ...
+    'ecoli_uni', 'CNAE-9', 'colon'};
 datapath = './data/glass.mat';
 disp(['Loading dataset ', dataname]);
 data = load(datapath);
-X = data.X;Y = data.Y;
+X = data.X;Y = data.Y;S
 
 %% 10-fold split data
 disp(['10-fold data split']);
