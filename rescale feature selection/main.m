@@ -6,7 +6,7 @@ datanames = {'glass','segment_uni', 'LM', 'USPSdata_20_uni', 'binalpha_uni', ...
 datapath = './data/glass.mat';
 disp(['Loading dataset ', dataname]);
 data = load(datapath);
-X = data.X;Y = data.Y;S
+X = data.X;Y = data.Y;
 
 %% 10-fold split data
 disp(['10-fold data split']);
