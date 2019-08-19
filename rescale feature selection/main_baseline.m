@@ -20,17 +20,10 @@ for i = 1:k
     % choose data for train and test
     [train_X, test_X, train_Y, test_Y] = one_fold_data(data, i, indices);
     
-    % feature selection
-    gamma = 1;
-    max_iter = 10;
-    max_iter2 = 10;
-    [ ranked, theta,W,obj] = ...
-        scalefs( train_X', one_hot_encoder(train_Y));
-    
     % classification for each selected dimension
     for j = 1:d
-        model = fitcknn(train_X(:,ranked(1:j)), train_Y, 'NumNeighbors', 1);
-        predict_Y = predict(model, test_X(:,ranked(1:j)));
+        model = fitcknn(train_X(:,1:j), train_Y, 'NumNeighbors', 1);
+        predict_Y = predict(model, test_X(:,1:j));
         accs(i,j) = mean(test_Y == predict_Y);
     end
 end
