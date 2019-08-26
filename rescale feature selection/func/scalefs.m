@@ -53,8 +53,8 @@ for iter=1:MAX_ITER
     for iter2=1:MAX_ITER2
         W=(XHX+gamma*(Q^-2))\XHY;
         temp=sum(W.*W,2).^(1/(q+1))+epsilon;
-%         Q=diag( temp/ sum(temp) ).^(q/2);
-        Q = diag(temp/sum(temp));
+        Q=diag( temp/ sum(temp) ).^(q/2);
+%         Q = diag(temp/sum(temp));
         obj_w=F22norm(H*X'*W-H*Y)+gamma*trace(W'*Q*W);
         if iter2>1
             change=abs(obj_w_old-obj_w)/obj_w_old;
