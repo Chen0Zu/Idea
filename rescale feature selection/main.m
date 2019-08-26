@@ -3,7 +3,7 @@ addpath('./func')
 %% load data
 datanames = {'glass','segment_uni', 'LM', 'USPSdata_20_uni', 'binalpha_uni', ...
     'ecoli_uni', 'CNAE-9', 'colon'};
-data_idx = 7;
+data_idx = 8;
 datapath = ['./data/', datanames{data_idx},'.mat'];
 disp(['Loading dataset ', datanames{data_idx}]);
 data = load(datapath);
