@@ -1,0 +1,4 @@
+function [W, b, obj] = adaptivelossFS(X, Y, lambda)
+% min_{W,b}  ||X*W+1*b'-F||_sigma+lambda*||W||_2,1
+% that is: min_{W,b}  \sum_i (1+sigma)*||xi*W+b'-y||
+end
