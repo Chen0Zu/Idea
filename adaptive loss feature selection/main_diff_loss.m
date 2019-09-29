@@ -1,3 +1,4 @@
+clc;clear;
 sigmas = [0.1, 1, 10];
 x = -3:0.1:3;
 l1 = abs(x);
